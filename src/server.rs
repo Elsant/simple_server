@@ -26,7 +26,9 @@ impl Server {
                             println!("Received - {}", String::from_utf8_lossy(&mut buffer));
 
                             match Request::try_from(&buffer as &[u8]) {
-                                Ok(request) => {},
+                                Ok(request) => {
+                                    dbg!(request);
+                                },
                                 Err(err) => println!("{:?}", err)
                             }
                         },

@@ -6,6 +6,7 @@ use std::fmt::{Debug, Display, Formatter, Result as FmtResult};
 use std::str;
 use std::str::Utf8Error;
 
+#[derive(Debug)]
 pub struct Request<'buf> {
     path: &'buf str,
     query_string: Option<QueryString<'buf>>,
@@ -22,7 +23,7 @@ impl<'buf> TryFrom<&'buf [u8]> for Request<'buf> {
         let (mut path, request) = get_next_word(request).ok_or(ParseError::InvalidRequest)?;
         let (protocol, _) = get_next_word(request).ok_or(ParseError::InvalidRequest)?;
 
-        if protocol != "HTTP1/1.1" {
+        if protocol != "HTTP/1.1" {
             return Err(ParseError::InvalidProtocol)
         }
 
